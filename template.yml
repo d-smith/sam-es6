@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Simple lambda
+
+Globals:
+  Function:
+    Runtime: nodejs8.10
+
+Resources:
+  Hello:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./dist
+      Handler: mylambda.handler
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /yo
+            Method: get
+
+Outputs:
+
+  # Form endpoint url for convenience
+  HelloProdEndpoint:
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/yo"
